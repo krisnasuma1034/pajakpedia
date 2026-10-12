@@ -1,0 +1,6 @@
+{
+  "name": "PajakPedia - Portal Edukasi Pajak & Keuangan Indonesia",
+  "description": "Portal edukasi pajak, keuangan pribadi, dan bisnis Indonesia terpercaya dengan panduan praktis, kalkulator PPh 21 TER, UMKM PP 55, PPN, dan kamus istilah regulasi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
