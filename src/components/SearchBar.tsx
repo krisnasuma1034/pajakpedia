@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, BookOpen, Calculator, FileText, ArrowRight } from 'lucide-react';
-import { Article, GlossaryTerm, RegulatorySourceItem } from '../types';
+import { Search, X, BookOpen, Calculator, FileText, ArrowRight, Radio } from 'lucide-react';
+import { Article, GlossaryTerm, RegulatorySourceItem, ExternalNewsItem } from '../types';
 
 interface SearchBarProps {
   articles: Article[];
   glossary: GlossaryTerm[];
   regulations: RegulatorySourceItem[];
+  newsList?: ExternalNewsItem[];
   onSelectArticle: (slug: string) => void;
   onSelectGlossary: (slug: string) => void;
   onSelectCalculator: (toolId: string) => void;
+  onSelectNews?: (id: string) => void;
   className?: string;
   placeholder?: string;
 }
@@ -17,9 +19,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   articles,
   glossary,
   regulations,
+  newsList,
   onSelectArticle,
   onSelectGlossary,
   onSelectCalculator,
+  onSelectNews,
   className = '',
   placeholder = 'Cari aturan, kalkulator PPh 21, UMKM 0,5%, atau istilah pajak...',
 }) => {
@@ -68,8 +72,22 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       ].filter((c) => c.title.toLowerCase().includes(normalized) || c.keywords.includes(normalized)).slice(0, 2)
     : [];
 
+  const matchedNews = normalized && newsList
+    ? newsList
+        .filter(
+          (n) =>
+            n.title.toLowerCase().includes(normalized) ||
+            n.summary.toLowerCase().includes(normalized) ||
+            n.sourceName.toLowerCase().includes(normalized)
+        )
+        .slice(0, 3)
+    : [];
+
   const hasResults =
-    matchedArticles.length > 0 || matchedGlossary.length > 0 || matchedCalculators.length > 0;
+    matchedArticles.length > 0 ||
+    matchedGlossary.length > 0 ||
+    matchedCalculators.length > 0 ||
+    matchedNews.length > 0;
 
   return (
     <div ref={dropdownRef} className={`relative w-full ${className}`}>
@@ -154,6 +172,31 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                       <span className="flex items-center gap-2">
                         <FileText className="w-4 h-4 text-slate-700 shrink-0" />
                         <span className="font-medium line-clamp-1">{a.title}</span>
+                      </span>
+                      <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* News section */}
+              {matchedNews.length > 0 && (
+                <div className="p-2">
+                  <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-2 py-1">
+                    Warta & Berita Pajak Terkini
+                  </div>
+                  {matchedNews.map((n) => (
+                    <button
+                      key={n.id}
+                      onClick={() => {
+                        if (onSelectNews) onSelectNews(n.id);
+                        setIsOpen(false);
+                      }}
+                      className="w-full flex items-center justify-between px-3 py-2 text-left rounded-md hover:bg-slate-50 text-sm text-slate-800 transition"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Radio className="w-4 h-4 text-teal-700 shrink-0" />
+                        <span className="font-medium line-clamp-1">{n.title}</span>
                       </span>
                       <ArrowRight className="w-3.5 h-3.5 text-slate-400" />
                     </button>

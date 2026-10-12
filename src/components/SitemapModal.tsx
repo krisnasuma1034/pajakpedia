@@ -38,6 +38,11 @@ export const SitemapModal: React.FC<SitemapModalProps> = ({
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>${origin}/berita</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>${origin}/kalkulator</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>

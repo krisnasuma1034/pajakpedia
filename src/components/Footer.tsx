@@ -36,6 +36,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenSitemap }) => 
             <ul className="space-y-2 text-xs">
               <li>
                 <button
+                  onClick={() => onNavigate('news')}
+                  className="hover:text-slate-900 transition-colors text-left font-medium text-teal-800"
+                >
+                  Berita & Update Pajak
+                </button>
+              </li>
+              <li>
+                <button
                   onClick={() => onNavigate('articles')}
                   className="hover:text-slate-900 transition-colors text-left"
                 >

@@ -14,7 +14,7 @@ import {
   Building2,
   CheckCircle2,
 } from 'lucide-react';
-import { Article, GlossaryTerm, RegulatorySourceItem, AdSenseSettings } from '../types';
+import { Article, GlossaryTerm, RegulatorySourceItem, AdSenseSettings, ExternalNewsItem } from '../types';
 import { SearchBar } from '../components/SearchBar';
 import { AdSlot } from '../components/AdSlot';
 
@@ -22,6 +22,7 @@ interface HomeViewProps {
   articles: Article[];
   glossary: GlossaryTerm[];
   regulations: RegulatorySourceItem[];
+  newsList?: ExternalNewsItem[];
   adSettings: AdSenseSettings;
   onNavigate: (view: string, param?: string) => void;
 }
@@ -30,6 +31,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
   articles,
   glossary,
   regulations,
+  newsList = [],
   adSettings,
   onNavigate,
 }) => {
@@ -64,9 +66,11 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   articles={publishedArticles}
                   glossary={glossary}
                   regulations={regulations}
+                  newsList={newsList}
                   onSelectArticle={(slug) => onNavigate('article-detail', slug)}
                   onSelectGlossary={(slug) => onNavigate('glossary', slug)}
                   onSelectCalculator={(toolId) => onNavigate('calculators', toolId)}
+                  onSelectNews={() => onNavigate('news')}
                 />
               </div>
 
@@ -418,6 +422,69 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
         </div>
       </section>
+
+      {/* 4.5. Berita & Update Pajak Terkini (Siaran Pers & Regulasi) */}
+      {newsList.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-4">
+            <div>
+              <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                Warta & Siaran Pers Terkini
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold font-serif text-slate-950">
+                Berita & Update Pajak Indonesia
+              </h2>
+            </div>
+            <button
+              onClick={() => onNavigate('news')}
+              className="text-xs font-semibold text-slate-900 hover:text-teal-700 inline-flex items-center gap-1 transition"
+            >
+              Lihat Seluruh Berita ({newsList.length})
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {newsList.slice(0, 3).map((n) => (
+              <article
+                key={n.id}
+                className="bg-white border border-slate-200 rounded-xl p-5 hover:border-slate-300 hover:shadow-xs transition flex flex-col justify-between space-y-3"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-[11px] text-slate-500">
+                    <span className="font-semibold text-slate-800">{n.sourceName}</span>
+                    <span>{n.publishedAt}</span>
+                  </div>
+
+                  <h3 className="font-serif font-bold text-sm text-slate-900 leading-snug hover:text-teal-800 transition">
+                    <a href={n.originalUrl} target="_blank" rel="noreferrer noopener" className="hover:underline">
+                      {n.title}
+                    </a>
+                  </h3>
+
+                  <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
+                    {n.summary}
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span className="text-[10px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    Terverifikasi
+                  </span>
+                  <a
+                    href={n.originalUrl}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="text-teal-800 hover:text-teal-950 font-semibold inline-flex items-center gap-1"
+                  >
+                    Sumber Asli →
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* 5. Latest Regulatory Updates (Pembaruan Aturan Terkini) */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6">

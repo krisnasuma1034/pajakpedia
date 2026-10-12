@@ -140,3 +140,94 @@ export type PTKPStatus =
   | 'K/3';
 
 export type TERCategory = 'A' | 'B' | 'C';
+
+// ==========================================
+// MODEL BERITA & UPDATE PAJAK OTOMATIS
+// ==========================================
+
+export type NewsCategory =
+  | 'coretax'
+  | 'regulasi'
+  | 'pajak-umkm'
+  | 'pph-ppn'
+  | 'fiskal'
+  | 'pengumuman'
+  | 'bisnis';
+
+export type NewsSourceType = 'pemerintah' | 'media' | 'lainnya';
+
+export interface NewsSource {
+  id: string;
+  name: string;
+  siteUrl: string;
+  feedUrl?: string;
+  apiEndpoint?: string;
+  sourceType: NewsSourceType;
+  category: NewsCategory;
+  active: boolean;
+  syncIntervalMinutes: number;
+  lastFetchedAt?: string;
+  lastFetchStatus: 'success' | 'failed' | 'manual_only' | 'pending';
+  lastErrorMessage?: string;
+  rateLimitPerMinute?: number;
+  notes?: string;
+  requiresManualReview?: boolean;
+}
+
+export type VerificationStatus =
+  | 'terverifikasi'
+  | 'menunggu_pemeriksaan'
+  | 'perlu_review'
+  | 'tidak_berlaku';
+
+export interface ExternalNewsItem {
+  id: string;
+  sourceId: string;
+  sourceName: string;
+  title: string;
+  originalUrl: string;
+  canonicalUrl: string;
+  guid: string;
+  publishedAt: string;
+  fetchedAt: string;
+  category: NewsCategory;
+  summary: string;
+  imageUrl?: string;
+  verificationStatus: VerificationStatus;
+  editorialStatus: 'raw' | 'drafted' | 'published' | 'archived';
+  isDuplicate: boolean;
+  duplicateOfId?: string;
+  isExternal: boolean;
+  editorNotes?: string;
+  verifiedBy?: string;
+  verifiedDate?: string;
+}
+
+export interface NewsSyncLog {
+  id: string;
+  sourceId: string;
+  sourceName: string;
+  startedAt: string;
+  completedAt: string;
+  itemsFound: number;
+  itemsNew: number;
+  itemsUpdated: number;
+  itemsDuplicate: number;
+  status: 'success' | 'partial' | 'failed';
+  errorSummary?: string;
+}
+
+export interface EditorialDraft {
+  id: string;
+  newsItemId: string;
+  title: string;
+  educationalTakeaway: string;
+  practicalImpact: string;
+  originalSourceUrl: string;
+  sourceName: string;
+  createdAt: string;
+  status: 'pending_review' | 'approved' | 'rejected';
+  reviewedBy?: string;
+  reviewedAt?: string;
+  notes?: string;
+}

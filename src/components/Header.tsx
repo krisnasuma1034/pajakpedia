@@ -12,6 +12,7 @@ export const Header: React.FC<HeaderProps> = ({ activeView, onNavigate }) => {
 
   const navItems = [
     { id: 'home', label: 'Beranda' },
+    { id: 'news', label: 'Berita & Update' },
     { id: 'articles', label: 'Panduan Pajak' },
     { id: 'calculators', label: 'Kalkulator' },
     { id: 'glossary', label: 'Kamus Pajak' },
