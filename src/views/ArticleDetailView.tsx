@@ -135,6 +135,12 @@ export const ArticleDetailView: React.FC<ArticleDetailViewProps> = ({
             src={article.coverImage}
             alt={article.imageAlt}
             referrerPolicy="no-referrer"
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (!target.src.endsWith('/images/hero-tax-desk.jpg')) {
+                target.src = '/images/hero-tax-desk.jpg';
+              }
+            }}
             className="w-full h-auto aspect-16/9 object-cover"
           />
           <figcaption className="p-3 text-[11px] text-slate-500 italic bg-white border-t border-slate-100">

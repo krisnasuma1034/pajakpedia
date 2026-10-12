@@ -110,6 +110,12 @@ export const ArticleListView: React.FC<ArticleListViewProps> = ({
                     src={art.coverImage}
                     alt={art.imageAlt}
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.endsWith('/images/hero-tax-desk.jpg')) {
+                        target.src = '/images/hero-tax-desk.jpg';
+                      }
+                    }}
                     className="w-full h-full object-cover group-hover:scale-102 transition duration-300"
                   />
                 </div>

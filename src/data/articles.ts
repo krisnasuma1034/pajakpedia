@@ -26,7 +26,7 @@ export const INITIAL_ARTICLES: Article[] = [
     publishedAt: '2024-01-15',
     updatedAt: '2026-10-11',
     applicablePeriod: 'Berlaku sejak 1 Januari 2024 hingga Sekarang',
-    coverImage: '/src/assets/images/guide_pph21_salary_1791783176528.jpg',
+    coverImage: '/images/guide-pph21-salary.jpg',
     imageAlt: 'Karyawan profesional menelaah bukti potong dan slip gaji pemotongan PPh 21 TER',
     readingTimeMinutes: 7,
     keyTakeaways: [
@@ -150,7 +150,7 @@ export const INITIAL_ARTICLES: Article[] = [
     publishedAt: '2024-02-10',
     updatedAt: '2026-10-11',
     applicablePeriod: 'Berlaku Berdasarkan UU HPP & PP No. 55/2022',
-    coverImage: '/src/assets/images/guide_umkm_business_1791783190239.jpg',
+    coverImage: '/images/guide-umkm-business.jpg',
     imageAlt: 'Pelaku usaha UMKM mengelola pembukuan dan catatan peredaran bruto harian di toko',
     readingTimeMinutes: 6,
     keyTakeaways: [
@@ -249,7 +249,7 @@ export const INITIAL_ARTICLES: Article[] = [
     publishedAt: '2024-07-05',
     updatedAt: '2026-10-11',
     applicablePeriod: 'Berlaku Penuh Sesuai PER-06/PJ/2024',
-    coverImage: '/src/assets/images/guide_coretax_digital_1791783201399.jpg',
+    coverImage: '/images/guide-coretax-digital.jpg',
     imageAlt: 'Tampilan antarmuka sistem terpadu Coretax DJP pada perangkat komputer modern',
     readingTimeMinutes: 5,
     keyTakeaways: [
@@ -323,7 +323,7 @@ export const INITIAL_ARTICLES: Article[] = [
     publishedAt: '2024-03-01',
     updatedAt: '2026-10-11',
     applicablePeriod: 'Berlaku Berdasarkan UU HPP No. 7/2021',
-    coverImage: '/src/assets/images/hero_editorial_tax_desk_1791783162275.jpg',
+    coverImage: '/images/hero-tax-desk.jpg',
     imageAlt: 'Perhitungan penghasilan kena pajak dan simulasi tarif progresif di meja kerja',
     readingTimeMinutes: 5,
     keyTakeaways: [
@@ -410,7 +410,7 @@ export const INITIAL_ARTICLES: Article[] = [
     publishedAt: '2024-04-12',
     updatedAt: '2026-10-11',
     applicablePeriod: 'Berlaku Berdasarkan UU HPP No. 7/2021',
-    coverImage: '/src/assets/images/guide_umkm_business_1791783190239.jpg',
+    coverImage: '/images/guide-umkm-business.jpg',
     imageAlt: 'Penerbitan faktur pajak dan perhitungan dasar pengenaan pajak atas transaksi penjualan',
     readingTimeMinutes: 5,
     keyTakeaways: [
@@ -486,7 +486,7 @@ export const INITIAL_ARTICLES: Article[] = [
     publishedAt: '2024-05-18',
     updatedAt: '2026-10-11',
     applicablePeriod: 'Berlaku Sesuai PER-17/PJ/2015 & UU HPP',
-    coverImage: '/src/assets/images/hero_editorial_tax_desk_1791783162275.jpg',
+    coverImage: '/images/hero-tax-desk.jpg',
     imageAlt: 'Freelancer bekerja mandiri menghitung penghasilan neto menggunakan norma penghitungan',
     readingTimeMinutes: 6,
     keyTakeaways: [

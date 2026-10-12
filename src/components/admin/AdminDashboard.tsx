@@ -163,7 +163,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         publishedAt: new Date().toISOString().split('T')[0],
         updatedAt: new Date().toISOString().split('T')[0],
         applicablePeriod: editApplicablePeriod,
-        coverImage: '/src/assets/images/hero_editorial_tax_desk_1791783162275.jpg',
+        coverImage: '/images/hero-tax-desk.jpg',
         imageAlt: editTitle,
         readingTimeMinutes: 5,
         keyTakeaways: takeaways,

@@ -40,7 +40,15 @@ export default function App() {
     const saved = localStorage.getItem('pajakpedia_articles');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map((a: Article) => ({
+            ...a,
+            coverImage: a.coverImage?.startsWith('/src/assets/images/')
+              ? a.coverImage.replace('/src/assets/images/', '/images/')
+              : a.coverImage || '/images/hero-tax-desk.jpg',
+          }));
+        }
       } catch (e) {
         console.error(e);
       }
@@ -346,7 +354,7 @@ export default function App() {
       publishedAt: new Date().toISOString().split('T')[0],
       updatedAt: new Date().toISOString().split('T')[0],
       applicablePeriod: 'Tahun Pajak 2026',
-      coverImage: '/src/assets/images/hero_editorial_tax_desk_1791783162275.jpg',
+      coverImage: '/images/hero-tax-desk.jpg',
       imageAlt: draft.title,
       readingTimeMinutes: 4,
       keyTakeaways: [

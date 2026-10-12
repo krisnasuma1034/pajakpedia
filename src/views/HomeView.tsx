@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Calculator,
   BookOpen,
@@ -17,6 +17,113 @@ import {
 import { Article, GlossaryTerm, RegulatorySourceItem, AdSenseSettings, ExternalNewsItem } from '../types';
 import { SearchBar } from '../components/SearchBar';
 import { AdSlot } from '../components/AdSlot';
+
+interface HeroFeaturedCardProps {
+  onNavigate: (view: string, param?: string) => void;
+}
+
+const HeroFeaturedCard: React.FC<HeroFeaturedCardProps> = ({ onNavigate }) => {
+  // Primary image in public directory
+  const primarySrc = '/images/hero-tax-desk.jpg';
+  // Secondary fallback asset
+  const secondarySrc = '/images/hero_editorial_tax_desk_1791783162275.jpg';
+
+  const [currentSrc, setCurrentSrc] = useState<string>(primarySrc);
+  const [triedSecondary, setTriedSecondary] = useState<boolean>(false);
+  const [hasFailed, setHasFailed] = useState<boolean>(false);
+
+  const handleImageError = () => {
+    if (!triedSecondary) {
+      setTriedSecondary(true);
+      setCurrentSrc(secondarySrc);
+    } else {
+      setHasFailed(true);
+    }
+  };
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
+      <div className="aspect-16/10 overflow-hidden bg-slate-900 relative">
+        {!hasFailed ? (
+          <img
+            src={currentSrc}
+            alt="Meja analisis perpajakan Indonesia, dokumen SPT, laptop finansial, dan panduan PPh 21 TER"
+            loading="eager"
+            decoding="async"
+            onError={handleImageError}
+            className="w-full h-full object-cover transition-transform duration-300 hover:scale-102"
+          />
+        ) : (
+          /* Graceful Editorial CSS-based Fallback (zero broken images) */
+          <div className="w-full h-full p-6 bg-gradient-to-br from-slate-950 via-slate-900 to-teal-950 text-white flex flex-col justify-between relative overflow-hidden select-none">
+            <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px]" />
+            <div className="relative z-10 flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-teal-300 text-xs font-semibold uppercase tracking-wider">
+                <ShieldCheck className="w-4 h-4 text-teal-400" />
+                <span>PajakPedia Rujukan Resmi</span>
+              </div>
+              <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded border border-white/20 font-mono">
+                PP 58/2023
+              </span>
+            </div>
+            <div className="relative z-10 space-y-1 my-auto">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-teal-500/20 border border-teal-500/30 flex items-center justify-center text-teal-300 shrink-0">
+                  <Calculator className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="text-xs text-slate-300 font-mono">Simulasi Pajak Terverifikasi</div>
+                  <div className="text-base font-serif font-bold text-white leading-snug">
+                    PPh 21 TER · UU HPP · Coretax
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="relative z-10 flex items-center justify-between text-[11px] text-slate-300 border-t border-white/10 pt-2">
+              <span>Kurasi Konsultan Pajak BKP</span>
+              <span className="text-teal-400 font-semibold">Tahun Pajak 2026</span>
+            </div>
+          </div>
+        )}
+        <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white text-[11px] font-medium px-2.5 py-1 rounded shadow-xs">
+          Rujukan Resmi 2026
+        </div>
+      </div>
+
+      <div className="p-6 space-y-4">
+        <div className="flex items-center gap-2 text-xs text-slate-500">
+          <span className="font-semibold text-teal-800">Panduan Utama</span>
+          <span>·</span>
+          <span>Diperbarui Oktober 2026</span>
+        </div>
+
+        <h3 className="font-serif font-bold text-lg text-slate-900 leading-snug">
+          Pemotongan PPh 21 TER: Bagaimana Menghitung Potongan Bulanan Anda?
+        </h3>
+
+        <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+          Ketahui tabel resmi TER Kategori A, B, dan C berdasarkan PP 58/2023 serta mekanisme penyesuaian gaji pada masa pajak Desember.
+        </p>
+
+        <div className="pt-2 flex items-center justify-between border-t border-slate-100">
+          <button
+            onClick={() => onNavigate('calculators', 'pph21')}
+            className="text-xs font-semibold text-slate-900 hover:text-teal-700 inline-flex items-center gap-1 transition cursor-pointer"
+          >
+            Buka Kalkulator TER
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+          <button
+            onClick={() => onNavigate('article-detail', 'panduan-lengkap-pph-21-ter-pp-58-2023')}
+            className="text-xs text-slate-500 hover:text-slate-900 transition cursor-pointer"
+          >
+            Baca Panduan
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 interface HomeViewProps {
   articles: Article[];
@@ -104,53 +211,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
               </div>
             </div>
 
-            {/* Right Column: Featured Visual Hero Card */}
+            {/* Right Column: Featured Visual Hero Card with Robust Asset Loading & Fallback */}
             <div className="lg:col-span-5">
-              <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
-                <div className="aspect-16/10 overflow-hidden bg-slate-100 relative">
-                  <img
-                    src="/src/assets/images/hero_editorial_tax_desk_1791783162275.jpg"
-                    alt="Meja analisis perpajakan dan pelaporan keuangan di Indonesia"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white text-[11px] font-medium px-2.5 py-1 rounded">
-                    Rujukan Resmi 2026
-                  </div>
-                </div>
-
-                <div className="p-6 space-y-4">
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-                    <span>Panduan Utama</span>
-                    <span>·</span>
-                    <span>Diperbarui Oktober 2026</span>
-                  </div>
-
-                  <h3 className="font-serif font-bold text-lg text-slate-900 leading-snug">
-                    Pemotongan PPh 21 TER: Bagaimana Menghitung Potongan Bulanan Anda?
-                  </h3>
-
-                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
-                    Ketahui tabel resmi TER Kategori A, B, dan C berdasarkan PP 58/2023 serta mekanisme penyesuaian gaji pada masa pajak Desember.
-                  </p>
-
-                  <div className="pt-2 flex items-center justify-between border-t border-slate-100">
-                    <button
-                      onClick={() => onNavigate('calculators', 'pph21')}
-                      className="text-xs font-semibold text-slate-900 hover:text-teal-700 inline-flex items-center gap-1 transition"
-                    >
-                      Buka Kalkulator TER
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={() => onNavigate('article-detail', 'panduan-lengkap-pph-21-ter-pp-58-2023')}
-                      className="text-xs text-slate-500 hover:text-slate-900 transition"
-                    >
-                      Baca Panduan
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <HeroFeaturedCard onNavigate={onNavigate} />
             </div>
           </div>
         </div>
@@ -347,6 +410,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
                   src={leadArticle.coverImage}
                   alt={leadArticle.imageAlt}
                   referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.endsWith('/images/hero-tax-desk.jpg')) {
+                      target.src = '/images/hero-tax-desk.jpg';
+                    }
+                  }}
                   className="w-full h-full object-cover hover:scale-102 transition duration-300"
                 />
               </div>
@@ -401,6 +470,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
                     src={art.coverImage}
                     alt={art.imageAlt}
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.endsWith('/images/hero-tax-desk.jpg')) {
+                        target.src = '/images/hero-tax-desk.jpg';
+                      }
+                    }}
                     className="w-full h-full object-cover"
                   />
                 </div>
